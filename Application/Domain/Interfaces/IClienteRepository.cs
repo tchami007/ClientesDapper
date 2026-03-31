@@ -5,5 +5,6 @@ namespace ClientesDapper.Application.Domain.Interfaces
     public interface IClienteRepository
     {
         Task<List<Cliente>> GetClientesAll();
+        Task<Cliente> GetClienteById(int Id);
     }
 }

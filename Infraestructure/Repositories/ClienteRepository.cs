@@ -2,6 +2,7 @@
 using ClientesDapper.Application.Domain.Interfaces;
 using ClientesDapper.Infraestructure.Context;
 using Dapper;
+using System.Collections.Immutable;
 
 namespace ClientesDapper.Infraestructure.Repositories
 {
@@ -14,9 +15,38 @@ namespace ClientesDapper.Infraestructure.Repositories
             _context = context;
         }
 
+        public async Task<Cliente> GetClienteById(int Id)
+        {
+            const string sql = @"SELECT 
+                IdCliente,
+                TipoDocumento,
+                NumeroDocumento,
+                Apellidos,
+                Nombres,
+                FechaNacimiento,
+                Genero 
+                FROM Clientes
+                WHERE
+                IdCliente=@Id";
+
+            var cliente = await _context.Connection.QueryFirstOrDefaultAsync<Cliente>(
+                sql,
+                new { Id = Id }, transaction: _context.Transaction);
+
+            return cliente;
+        }
+
         public async Task<List<Cliente>> GetClientesAll()
         {
-            const string sql = "SELECT IdCliente,TipoDocumento,NumeroDocumento,Apellidos,Nombres,FechaNacimiento,Genero FROM Clientes";
+            const string sql = @"SELECT 
+                IdCliente,
+                TipoDocumento,
+                NumeroDocumento,
+                Apellidos,
+                Nombres,
+                FechaNacimiento,
+                Genero 
+            FROM Clientes";
 
             var clientes = await _context.Connection.QueryAsync<Cliente>(sql, transaction: _context.Transaction);
 

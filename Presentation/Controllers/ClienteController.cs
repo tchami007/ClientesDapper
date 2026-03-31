@@ -26,5 +26,15 @@ namespace ClientesDapper.Presentation.Controllers
                 return NotFound();
             return Ok(clientes);
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetClienteById(int id)
+        {
+            var solicitud = new GetClienteByIdQuery(id);
+            var resultado = await _mediator.Send(solicitud);
+            if (resultado == null)
+                return NotFound();
+            return Ok(resultado);
+        }
     }
 }
