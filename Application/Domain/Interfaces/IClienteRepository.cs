@@ -6,5 +6,8 @@ namespace ClientesDapper.Application.Domain.Interfaces
     {
         Task<List<Cliente>> GetClientesAll();
         Task<Cliente> GetClienteById(int Id);
+        Task<int> CreateCliente(Cliente cliente);
+        Task<bool> UpdateCliente(Cliente cliente);
+        Task<bool> DeleteCliente(int id);
     }
 }
